@@ -1,0 +1,194 @@
+/* ------------------------------------------------------
+   GLOBAL THEME
+------------------------------------------------------ */
+
+:root {
+  --primary: #2d6cdf;
+  --primary-dark: #1d4fb5;
+  --secondary: #f5f7fb;
+  --text-dark: #222;
+  --text-light: #555;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --warning: #f1c40f;
+  --white: #fff;
+  --radius: 8px;
+  --shadow: 0 2px 10px rgba(0,0,0,0.08);
+  --max-width: 900px;
+  --padding: 20px;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: var(--secondary);
+  color: var(--text-dark);
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+/* Container */
+.main-wrapper {
+  width: 100%;
+  max-width: var(--max-width);
+  background: var(--white);
+  padding: var(--padding);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  min-height: 600px;
+}
+
+/* ------------------------------------------------------
+   HEADER + NAVIGATION
+------------------------------------------------------ */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+header h1, header h2 {
+  font-weight: 600;
+}
+
+nav a, .logout-btn {
+  background: var(--danger);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+nav a:hover, .logout-btn:hover {
+  background: #c0392b;
+}
+
+/* ------------------------------------------------------
+   FORM STYLING
+------------------------------------------------------ */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+label {
+  font-weight: 500;
+}
+
+input, select {
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+button {
+  padding: 10px 15px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+/* ------------------------------------------------------
+   LISTS & CARDS
+------------------------------------------------------ */
+
+ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+li {
+  background: var(--white);
+  padding: 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 10px 0;
+  transition: 0.2s;
+}
+
+li:hover {
+  background: #f0f4ff;
+}
+
+li a {
+  text-decoration: none;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+/* Analysis Cards */
+.analysis-card {
+  background: var(--white);
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Risk level color helpers */
+.risk-high {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.risk-medium {
+  color: var(--warning);
+  font-weight: bold;
+}
+
+.risk-low {
+  color: var(--success);
+  font-weight: bold;
+}
+
+/* ------------------------------------------------------
+   AUTH FORMS (LOGIN/REGISTER)
+------------------------------------------------------ */
+
+.form-box {
+  width: 350px;
+  background: var(--white);
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: auto;
+}
+
+.form-box h2 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------
+   FOOTER
+------------------------------------------------------ */
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--text-light);
+}

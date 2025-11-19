@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h2 Patient: #{patient.name} - #{patient.age} yrs - #{patient.gender}
+  a(href="/") &larr; Back to Home
+
+  // Show all analyses for this patient
+  if analyses.length
+    h3 Analyses
+    each analysis in analyses
+      div.analysis-card
+        p Analysis ID: #{analysis._id}
+        p Risk Level: #{analysis.analysisResults.riskLevel}
+        p Cancer Probability: #{Math.round(analysis.analysisResults.cancerProbability * 100)}%
+        p Confidence Score: #{Math.round(analysis.analysisResults.confidenceScore * 100)}%
+        h4 Molecular Reasons
+        ul
+          each reason in analysis.analysisResults.molecularReasons
+            li #{reason}
+        h4 Recommendations
+        ul
+          each rec in analysis.analysisResults.recommendations
+            li #{rec}
+        // Edit analysis button
+        a.btn(href=`/analysis/${analysis._id}/edit`) Edit Analysis
+        hr
+  else
+    p No analyses found for this patient.
+
+  // Option to create new analysis
+  a.btn(href=`/analysis/new?patientId=${patient._id}`) + New Analysis

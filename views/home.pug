@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  section#patients
+    h2 Welcome, #{user.name}
+
+    h3 Your Patients
+
+    if patients.length
+      ul
+        each patient in patients
+          li
+            span #{patient.name} - #{patient.age} yrs - #{patient.gender}
+            a.btn(href=`/patients/${patient._id}/analyses`) View Analyses
+    else
+      p You have no patients yet.

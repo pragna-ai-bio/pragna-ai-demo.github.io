@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title Register
+    link(rel="stylesheet" href="../css/style.css")
+  body
+    .form-box
+        h1 Register
+
+        form(action="/auth/register" method="POST")
+        label(for="name") Name:
+        input(type="text" name="name" required)
+
+        br
+
+        label(for="email") Email:
+        input(type="email" name="email" required)
+
+        br
+
+        label(for="password") Password:
+        input(type="password" name="password" required)
+
+        br
+
+        button(type="submit") Register
+
+        p
+        | Already have an account?
+        a(href="/auth/login") Login

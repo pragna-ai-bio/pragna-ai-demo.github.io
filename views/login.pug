@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title Login
+    link(rel="stylesheet" href="../css/style.css")
+    
+  body
+    .form-box
+        h2 Login
+
+        if error
+            p(style="color:red") #{error}
+
+        form(action="/auth/login" method="POST")
+            label Email:
+            input(type="email" name="email" required)
+            br
+
+            label Password:
+            input(type="password" name="password" required)
+            br
+
+            button(type="submit") Login
+
+        p
+        | Don't have an account?
+        a(href="/auth/register") Register
