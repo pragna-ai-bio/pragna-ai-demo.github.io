@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { getPatients, getPatientById } from '../controllers/patientController.js';
-import Analysis from '../models/Analysis.js';
+import Analysis from '../models/analysisSchema.js';
 
 const router = Router();
 router.use(authMiddleware);
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
   const analysis = await Analysis.findOne({ patientId: patient._id }).sort({ createdAt: -1 });
 
   // Pass analysis as a single object (or null)
-  res.render('analysis', { patient, analysis });
+  res.render('view-analysis', { patient, analysis });
 });
 
 export default router;

@@ -1,4 +1,4 @@
-import Analysis from '../models/Analysis.js';
+import Analysis from '../models/analysisSchema.js';
 
 export async function getResearchData(req, res) {
     try {

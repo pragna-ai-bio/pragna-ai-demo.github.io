@@ -11,6 +11,6 @@ block content
         each patient in patients
           li
             span #{patient.name} - #{patient.age} yrs - #{patient.gender}
-            a.btn(href=`/patients/${patient._id}/analyses`) View Analyses
+            a.btn(href=`/patients/${patient._id}`) View Analyses
     else
       p You have no patients yet.

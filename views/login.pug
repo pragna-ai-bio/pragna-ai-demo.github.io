@@ -2,26 +2,42 @@ doctype html
 html
   head
     title Login
-    link(rel="stylesheet" href="../css/style.css")
-    
+    link(rel="stylesheet" href="/css/style.css")
+
   body
     .form-box
-        h2 Login
+      h2 Login
 
-        if error
-            p(style="color:red") #{error}
+      if error
+        p.error-message(style="text-align:center") #{error}
 
-        form(action="/auth/login" method="POST")
-            label Email:
-            input(type="email" name="email" required)
-            br
+      form(action="/auth/login" method="POST")
 
-            label Password:
-            input(type="password" name="password" required)
-            br
+        // EMAIL
+        label Email
+        input(
+          type="email"
+          name="email"
+          required
+          class=(fieldErrors?.email ? "input-error" : "")
+          value=(formData?.email || "")
+        )
+        if fieldErrors?.email
+          p.error-message= fieldErrors.email
 
-            button(type="submit") Login
+        // PASSWORD
+        label Password
+        input(
+          type="password"
+          name="password"
+          required
+          class=(fieldErrors?.password ? "input-error" : "")
+        )
+        if fieldErrors?.password
+          p.error-message= fieldErrors.password
 
-        p
+        button(type="submit") Login
+
+      p
         | Don't have an account?
         a(href="/auth/register") Register

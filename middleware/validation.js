@@ -21,19 +21,51 @@ export const userSchema = Joi.object({
 });
 
 // Middleware to validate request body
+// export const validate = (schema) => {
+//     return (req, res, next) => {
+//         const { error } = schema.validate(req.body);
+//         if (error) {
+//             return res.status(400).json({
+//                 status: 'error',
+//                 message: 'Validation failed',
+//                 errors: error.details.map(detail => detail.message)
+//             });
+//         }
+//         next();
+//     };
+// };
+
 export const validate = (schema) => {
     return (req, res, next) => {
-        const { error } = schema.validate(req.body);
-        if (error) {
+        const { error, value } = schema.validate(req.body, { abortEarly: false });
+
+        if (!error) return next();
+
+        // Convert Joi errors → field: message format
+        const fieldErrors = {};
+        error.details.forEach(detail => {
+            const field = detail.path.join("."); // e.g. "patientAge", "molecularReadings.carbonylStretch"
+            fieldErrors[field] = detail.message;
+        });
+
+        // If JSON request, send JSON error
+        if (req.xhr || req.headers.accept?.includes("application/json")) {
             return res.status(400).json({
-                status: 'error',
-                message: 'Validation failed',
-                errors: error.details.map(detail => detail.message)
+                status: "error",
+                message: "Validation failed",
+                errors: fieldErrors
             });
         }
-        next();
+
+        // Otherwise re-render the form with errors
+        return res.status(400).render("new-analysis", {
+            isUpdate: false,
+            analysis: req.body,
+            fieldErrors
+        });
     };
 };
+
 
 // Export middleware for specific schemas
 export const validateLacticAcidAnalysis = validate(lacticAcidAnalysisSchema);

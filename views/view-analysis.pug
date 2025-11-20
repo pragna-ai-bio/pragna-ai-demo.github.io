@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  h2 Analysis for #{patient.name}
+
+  form#analysisForm
+
+    h3 Patient Details
+
+    label Patient Name
+    input(type="text" value=patient.name readonly)
+
+    label Patient Age
+    input(type="number" value=patient.age readonly)
+
+    label Patient Gender
+    select(disabled)
+      option(value="male" selected=patient.gender === 'male') Male
+      option(value="female" selected=patient.gender === 'female') Female
+      option(value="other" selected=patient.gender === 'other') Other
+
+    h3 Molecular Readings
+
+    label Carbonyl Stretch
+    input(type="number" step="0.01" value=analysis.molecularReadings.carbonylStretch.value readonly)
+
+    label Methyl Deformation
+    input(type="number" step="0.01" value=analysis.molecularReadings.methylDeformation.value readonly)
+
+    label Carbon-Oxygen Stretch
+    input(type="number" step="0.01" value=analysis.molecularReadings.carbonOxygenStretch.value readonly)
+
+    label Hydroxyl Stretch
+    input(type="number" step="0.01" value=analysis.molecularReadings.hydroxylStretch.value readonly)
+
+    h3 Analysis Results
+
+    p Risk Level: #{analysis.analysisResults.riskLevel}
+    p Cancer Probability: #{Math.round(analysis.analysisResults.cancerProbability * 100)}%
+    p Confidence Score: #{Math.round(analysis.analysisResults.confidenceScore * 100)}%
+
+    h3 Additional Insights
+    label Agent Reasoning
+    textarea(readonly)= analysis.analysisResults.aiReasoning
+
+    label Doctor Feedback
+    textarea(readonly)= analysis.doctorFeedback
+
+    a.btn(href=`/analysis/${analysis._id}/update`) Update Analysis

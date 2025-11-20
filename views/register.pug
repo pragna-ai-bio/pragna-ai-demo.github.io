@@ -2,29 +2,54 @@ doctype html
 html
   head
     title Register
-    link(rel="stylesheet" href="../css/style.css")
+    link(rel="stylesheet" href="/css/style.css")
+
   body
     .form-box
-        h1 Register
+      h1 Register
 
-        form(action="/auth/register" method="POST")
-        label(for="name") Name:
-        input(type="text" name="name" required)
+      if error
+        p.error-message(style="text-align:center") #{error}
 
-        br
+      form(action="/auth/register" method="POST")
 
-        label(for="email") Email:
-        input(type="email" name="email" required)
+        // NAME
+        label Name
+        input(
+          type="text"
+          name="name"
+          required
+          class=(fieldErrors?.name ? "input-error" : "")
+          value=(formData?.name || "")
+        )
+        if fieldErrors?.name
+          p.error-message= fieldErrors.name
 
-        br
+        // EMAIL
+        label Email
+        input(
+          type="email"
+          name="email"
+          required
+          class=(fieldErrors?.email ? "input-error" : "")
+          value=(formData?.email || "")
+        )
+        if fieldErrors?.email
+          p.error-message= fieldErrors.email
 
-        label(for="password") Password:
-        input(type="password" name="password" required)
-
-        br
+        // PASSWORD
+        label Password
+        input(
+          type="password"
+          name="password"
+          required
+          class=(fieldErrors?.password ? "input-error" : "")
+        )
+        if fieldErrors?.password
+          p.error-message= fieldErrors.password
 
         button(type="submit") Register
 
-        p
+      p
         | Already have an account?
         a(href="/auth/login") Login
