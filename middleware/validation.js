@@ -36,34 +36,46 @@ export const userSchema = Joi.object({
 // };
 
 export const validate = (schema) => {
-    return (req, res, next) => {
-        const { error, value } = schema.validate(req.body, { abortEarly: false });
+  return (req, res, next) => {
+    const { error } = schema.validate(req.body, { abortEarly: false });
 
-        if (!error) return next();
+    if (!error) return next();
 
-        // Convert Joi errors → field: message format
-        const fieldErrors = {};
-        error.details.forEach(detail => {
-            const field = detail.path.join("."); // e.g. "patientAge", "molecularReadings.carbonylStretch"
-            fieldErrors[field] = detail.message;
-        });
+    // Convert Joi errors → { field: "message" }
+    const fieldErrors = {};
+    error.details.forEach(detail => {
+      const field = detail.path.join(".");
+      fieldErrors[field] = detail.message.replace(/["]/g, "");
+    });
 
-        // If JSON request, send JSON error
-        if (req.xhr || req.headers.accept?.includes("application/json")) {
-            return res.status(400).json({
-                status: "error",
-                message: "Validation failed",
-                errors: fieldErrors
-            });
-        }
+    if (req.xhr || req.headers.accept?.includes("application/json")) {
+      return res.status(400).json({
+        status: "error",
+        message: "Validation failed",
+        errors: fieldErrors
+      });
+    }
 
-        // Otherwise re-render the form with errors
-        return res.status(400).render("new-analysis", {
-            isUpdate: false,
-            analysis: req.body,
-            fieldErrors
-        });
-    };
+    if (req.path.includes("register")) {
+      return res.status(400).render("register", {
+        fieldErrors,
+        formData: req.body
+      });
+    }
+
+    if (req.path.includes("login")) {
+      return res.status(400).render("login", {
+        fieldErrors,
+        formData: req.body
+      });
+    }
+
+    return res.status(400).render("new-analysis", {
+      isUpdate: false,
+      analysis: req.body,
+      fieldErrors
+    });
+  };
 };
 
 

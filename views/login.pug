@@ -19,10 +19,10 @@ html
           type="email"
           name="email"
           required
-          class=(fieldErrors?.email ? "input-error" : "")
-          value=(formData?.email || "")
+          class=(fieldErrors && fieldErrors.email ? "input-error" : "")
+          value=(formData && formData.email ? formData.email : "")
         )
-        if fieldErrors?.email
+        if fieldErrors && fieldErrors.email
           p.error-message= fieldErrors.email
 
         // PASSWORD
@@ -31,9 +31,9 @@ html
           type="password"
           name="password"
           required
-          class=(fieldErrors?.password ? "input-error" : "")
+          class=(fieldErrors && fieldErrors.password ? "input-error" : "")
         )
-        if fieldErrors?.password
+        if fieldErrors && fieldErrors.password
           p.error-message= fieldErrors.password
 
         button(type="submit") Login

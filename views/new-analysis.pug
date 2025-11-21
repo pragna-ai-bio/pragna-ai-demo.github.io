@@ -20,10 +20,14 @@ mixin formFields()
     type="text"
     name="patientName"
     required
-    class=(fieldErrors?.patientName ? "input-error" : "")
-    value=(analysis?.patientName || patient?.name || "")
+    class=(fieldErrors && fieldErrors.patientName ? "input-error" : "")
+    value=(
+      analysis && analysis.patientName
+        ? analysis.patientName
+        : (patient && patient.name ? patient.name : "")
+    )
   )
-  if fieldErrors?.patientName
+  if fieldErrors && fieldErrors.patientName
     p.error-message= fieldErrors.patientName
 
   // --- AGE ---
@@ -32,10 +36,14 @@ mixin formFields()
     type="number"
     name="patientAge"
     required
-    class=(fieldErrors?.patientAge ? "input-error" : "")
-    value=(analysis?.patientAge || patient?.age || "")
+    class=(fieldErrors && fieldErrors.patientAge ? "input-error" : "")
+    value=(
+      analysis && analysis.patientAge
+        ? analysis.patientAge
+        : (patient && patient.age ? patient.age : "")
+    )
   )
-  if fieldErrors?.patientAge
+  if fieldErrors && fieldErrors.patientAge
     p.error-message= fieldErrors.patientAge
 
   // --- GENDER ---
@@ -43,14 +51,23 @@ mixin formFields()
   select(
     name="patientGender"
     required
-    class=(fieldErrors?.patientGender ? "input-error" : "")
+    class=(fieldErrors && fieldErrors.patientGender ? "input-error" : "")
   )
     option(value="" disabled selected=(!patient && !analysis)) Select Gender
-    option(value="male" selected=(analysis?.patientGender === "male" || patient?.gender==="male")) Male
-    option(value="female" selected=(analysis?.patientGender === "female" || patient?.gender==="female")) Female
-    option(value="other" selected=(analysis?.patientGender === "other" || patient?.gender==="other")) Other
+    option(
+      value="male"
+      selected=(analysis && analysis.patientGender==="male" || patient && patient.gender==="male")
+    ) Male
+    option(
+      value="female"
+      selected=(analysis && analysis.patientGender==="female" || patient && patient.gender==="female")
+    ) Female
+    option(
+      value="other"
+      selected=(analysis && analysis.patientGender==="other" || patient && patient.gender==="other")
+    ) Other
 
-  if fieldErrors?.patientGender
+  if fieldErrors && fieldErrors.patientGender
     p.error-message= fieldErrors.patientGender
 
   h3 Molecular Readings
@@ -62,36 +79,36 @@ mixin formFields()
     step="0.01"
     name="molecularReadings[carbonylStretch]"
     required
-    class=(fieldErrors?.["molecularReadings.carbonylStretch"] ? "input-error" : "")
-    value=(analysis?.molecularReadings?.carbonylStretch || "")
+    class=(fieldErrors && fieldErrors["molecularReadings.carbonylStretch"] ? "input-error" : "")
+    value=(analysis && analysis.molecularReadings ? analysis.molecularReadings.carbonylStretch : "")
   )
-  if fieldErrors?.["molecularReadings.carbonylStretch"]
+  if fieldErrors && fieldErrors["molecularReadings.carbonylStretch"]
     p.error-message= fieldErrors["molecularReadings.carbonylStretch"]
 
-  // --- METHYL DEFORMATION ---
+  // --- METHYL ---
   label Methyl Deformation
   input(
     type="number"
     step="0.01"
     name="molecularReadings[methylDeformation]"
     required
-    class=(fieldErrors?.["molecularReadings.methylDeformation"] ? "input-error" : "")
-    value=(analysis?.molecularReadings?.methylDeformation || "")
+    class=(fieldErrors && fieldErrors["molecularReadings.methylDeformation"] ? "input-error" : "")
+    value=(analysis && analysis.molecularReadings ? analysis.molecularReadings.methylDeformation : "")
   )
-  if fieldErrors?.["molecularReadings.methylDeformation"]
+  if fieldErrors && fieldErrors["molecularReadings.methylDeformation"]
     p.error-message= fieldErrors["molecularReadings.methylDeformation"]
 
-  // --- CARBON-OXYGEN ---
+  // --- CARBON OXYGEN ---
   label Carbon-Oxygen Stretch
   input(
     type="number"
     step="0.01"
     name="molecularReadings[carbonOxygenStretch]"
     required
-    class=(fieldErrors?.["molecularReadings.carbonOxygenStretch"] ? "input-error" : "")
-    value=(analysis?.molecularReadings?.carbonOxygenStretch || "")
+    class=(fieldErrors && fieldErrors["molecularReadings.carbonOxygenStretch"] ? "input-error" : "")
+    value=(analysis && analysis.molecularReadings ? analysis.molecularReadings.carbonOxygenStretch : "")
   )
-  if fieldErrors?.["molecularReadings.carbonOxygenStretch"]
+  if fieldErrors && fieldErrors["molecularReadings.carbonOxygenStretch"]
     p.error-message= fieldErrors["molecularReadings.carbonOxygenStretch"]
 
   // --- HYDROXYL ---
@@ -101,10 +118,10 @@ mixin formFields()
     step="0.01"
     name="molecularReadings[hydroxylStretch]"
     required
-    class=(fieldErrors?.["molecularReadings.hydroxylStretch"] ? "input-error" : "")
-    value=(analysis?.molecularReadings?.hydroxylStretch || "")
+    class=(fieldErrors && fieldErrors["molecularReadings.hydroxylStretch"] ? "input-error" : "")
+    value=(analysis && analysis.molecularReadings ? analysis.molecularReadings.hydroxylStretch : "")
   )
-  if fieldErrors?.["molecularReadings.hydroxylStretch"]
+  if fieldErrors && fieldErrors["molecularReadings.hydroxylStretch"]
     p.error-message= fieldErrors["molecularReadings.hydroxylStretch"]
 
   button(type="submit") #{isUpdate ? "Save & Recalculate" : "Run Analysis"}
